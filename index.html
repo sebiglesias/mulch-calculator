@@ -6,6 +6,17 @@
 <title>Mulch & Topsoil Yardage Calculator — Bags vs Bulk Cubic Yards</title>
 <meta name="description" content="Calculate cubic yards of mulch, topsoil, or compost and how many 2 cu ft or 1.5 cu ft bags you need for garden beds. Compare bulk truck delivery vs bag costs.">
 <link rel="canonical" href="https://sebiglesias.com.ar/mulch-calculator/">
+  <link rel="alternate" hreflang="en" href="https://sebiglesias.com.ar/mulch-calculator/">
+  <link rel="alternate" hreflang="es" href="https://sebiglesias.com.ar/mulch-calculator/?lang=es">
+  <link rel="alternate" hreflang="de" href="https://sebiglesias.com.ar/mulch-calculator/?lang=de">
+  <link rel="alternate" hreflang="fr" href="https://sebiglesias.com.ar/mulch-calculator/?lang=fr">
+  <link rel="alternate" hreflang="it" href="https://sebiglesias.com.ar/mulch-calculator/?lang=it">
+  <link rel="alternate" hreflang="pt" href="https://sebiglesias.com.ar/mulch-calculator/?lang=pt">
+  <link rel="alternate" hreflang="nl" href="https://sebiglesias.com.ar/mulch-calculator/?lang=nl">
+  <link rel="alternate" hreflang="sv" href="https://sebiglesias.com.ar/mulch-calculator/?lang=sv">
+  <link rel="alternate" hreflang="da" href="https://sebiglesias.com.ar/mulch-calculator/?lang=da">
+  <link rel="alternate" hreflang="pl" href="https://sebiglesias.com.ar/mulch-calculator/?lang=pl">
+  <link rel="alternate" hreflang="x-default" href="https://sebiglesias.com.ar/mulch-calculator/">
 <meta name="theme-color" content="#84cc16">
 <meta name="robots" content="index, follow, max-image-preview:large">
 
@@ -89,6 +100,18 @@
 <div class="container">
   
     <header>
+<div style='display:flex;justify-content:flex-end;margin-bottom:.5rem'><select id="lang-select" aria-label="Language" style="background:#24221C;border:1px solid rgba(242,239,230,.18);color:#F2EFE6;font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:3px 6px;border-radius:3px;cursor:pointer;margin-left:auto">
+  <option value="en">🇺🇸 EN</option>
+  <option value="es">🇪🇸 ES</option>
+  <option value="de">🇩🇪 DE</option>
+  <option value="fr">🇫🇷 FR</option>
+  <option value="it">🇮🇹 IT</option>
+  <option value="pt">🇵🇹 PT</option>
+  <option value="nl">🇳🇱 NL</option>
+  <option value="sv">🇸🇪 SV</option>
+  <option value="da">🇩🇰 DA</option>
+  <option value="pl">🇵🇱 PL</option>
+</select></div>
       <span class="badge">Lawn & Landscaping</span>
       <h1>Mulch & Topsoil Calculator</h1>
       <p class="subtitle">Calculate how many cubic yards and bags of mulch or garden soil you need for your landscaping beds.</p>
@@ -238,5 +261,41 @@
 </div>
 
 <script src="app.js"></script>
+
+<script>
+/* I18N_AUTO_ENGINE */
+(function(){
+  const DICT = {"en": {"title": "Mulch, Soil & Gravel Calculator<span class='accent'>.</span>", "sub": "Cubic yards, 2 cu ft bags & bulk delivery cost for garden beds"}, "es": {"title": "Calculadora de Mantillo, Tierra y Grava<span class='accent'>.</span>", "sub": "Metros cúbicos, yardas y cantidad de bolsas para canteros y jardines"}, "de": {"title": "Rindenmulch, Erde & Kies Rechner<span class='accent'>.</span>", "sub": "Kubikmeter, Liter und Anzahl der Säcke für Gartenbeete berechnen"}, "fr": {"title": "Calculateur Paillage, Terreau & Gravier<span class='accent'>.</span>", "sub": "Volume en m³, litres et nombre de sacs pour vos massifs de jardin"}, "it": {"title": "Calcolatore Pacciamatura, Terriccio e Ghiaia<span class='accent'>.</span>", "sub": "Metri cubi, litri e sacchi necessari per aiuole e giardino"}, "pt": {"title": "Calculadora de Terra, Casca de Pinus e Brita<span class='accent'>.</span>", "sub": "Volume em m³ e quantidade de sacos para canteiros e jardinagem"}, "nl": {"title": "Boomschors, Tuinaarde & Grind Calculator<span class='accent'>.</span>", "sub": "Bereken kuub (m³) en aantal zakken voor borders en opritten"}, "sv": {"title": "Täckbark, planteringsjord & Grus Kalkylator<span class='accent'>.</span>", "sub": "Kubikmeter och antal säckar jord eller barkmull till rabatten"}, "da": {"title": "Dækbark, Muldjord & Ral Beregner<span class='accent'>.</span>", "sub": "Beregn kubikmeter (m³), bigbags og sække til havebede og indkørsel"}, "pl": {"title": "Kalkulator Kory Ogrodowej, Ziemi i Żwiru<span class='accent'>.</span>", "sub": "Oblicz metry sześcienne (m³) oraz liczbę worków na rabaty ogrodowe"}};
+  const h1El = document.querySelector('h1');
+  const subEl = document.querySelector('.sub') || document.querySelector('header p');
+  const selEl = document.getElementById('lang-select');
+  function applyLang(lang) {
+    const entry = DICT[lang] || DICT.en;
+    document.documentElement.lang = lang;
+    if (h1El && entry.title) h1El.innerHTML = entry.title;
+    if (subEl && entry.sub) subEl.textContent = entry.sub;
+    if (lang !== 'en' && entry.sub) {
+      document.title = (h1El ? h1El.textContent : '') + ' — ' + entry.sub;
+    }
+  }
+  const params = new URLSearchParams(window.location.search);
+  const init = params.get('lang') || localStorage.getItem('mulch-calculator-lang') || 'en';
+  const valid = DICT[init] ? init : 'en';
+  if (selEl) {
+    selEl.value = valid;
+    selEl.addEventListener('change', function(e) {
+      const nl = e.target.value;
+      localStorage.setItem('mulch-calculator-lang', nl);
+      const u = new URL(window.location.href);
+      if (nl === 'en') u.searchParams.delete('lang');
+      else u.searchParams.set('lang', nl);
+      window.history.replaceState({}, '', u);
+      applyLang(nl);
+    });
+  }
+  applyLang(valid);
+})();
+</script>
+
 </body>
 </html>
